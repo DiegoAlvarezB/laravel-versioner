@@ -3,6 +3,8 @@
 namespace Diegoalvarezb\Versioner;
 
 use Illuminate\Support\ServiceProvider;
+use Diegoalvarezb\Versioner\Commands\Generate;
+use Diegoalvarezb\Versioner\Commands\Show;
 
 class VersionerProvider extends ServiceProvider
 {
@@ -13,10 +15,11 @@ class VersionerProvider extends ServiceProvider
      */
     public function boot()
     {
-        // add GenerateVersion command
+        // add commands
         if ($this->app->runningInConsole()) {
             $this->commands([
-                GenerateVersion::class,
+                Generate::class,
+                Show::class,
             ]);
         }
     }

@@ -54,6 +54,7 @@ class Generate extends Command
         $process->run();
         if (!$process->isSuccessful()) {
             $this->error('Error retrieving git tag list');
+            exit;
         }
 
         $processResult = trim($process->getOutput());
@@ -75,19 +76,21 @@ class Generate extends Command
         $this->line("New version: $newVersion");
 
         // create new tag
-        $process = new Process("git tag -a '$newVersion' -m '$releaseType release $newVersion'");
+        $process = new Process("git tag -a '$newVersion' master -m '$releaseType release $newVersion'");
         $process->run();
         if (!$process->isSuccessful()) {
             $this->error('Error creating new git tag');
+            exit;
         }
 
         $this->info("The tag has been generated");
 
         // push new tag
-        $process = new Process("git push --tags");
+        $process = new Process("git push $newVersion");
         $process->run();
         if (!$process->isSuccessful()) {
             $this->error('Error pushing git tag to remote');
+            exit;
         }
 
         $this->info("The tag has been pushed");

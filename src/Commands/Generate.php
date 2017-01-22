@@ -86,7 +86,7 @@ class Generate extends Command
         $this->info("The tag has been generated");
 
         // push new tag
-        $process = new Process("git push $newVersion");
+        $process = new Process("git push origin $newVersion");
         $process->run();
         if (!$process->isSuccessful()) {
             $this->error('Error pushing git tag to remote');

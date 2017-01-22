@@ -11,10 +11,13 @@ The versions are generated in Git as tags with the format `vX.Y.Z`. When generat
 
 ### Instalation
 
-You only need to add the package to your `composer.json` file.
+First of all, you need to add the package to your `composer.json` file.
 ```sh
 composer require diegoalvarez/laravel-versioner
 ```
+
+Then you have to add a new provider in your config/app.php file, inside the **providers** list:
+`Diegoalvarezb\Versioner\VersionerProvider::class`
 
 ### Show current version
 

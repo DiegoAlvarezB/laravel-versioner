@@ -16,7 +16,7 @@ Package installation with composer:
 composer require diegoalvarez/laravel-versioner
 ```
 
-And add the service provider in your config/app.php file:
+And add the service provider in your `config/app.php` file:
 ```php
 Diegoalvarezb\Versioner\VersionerProvider::class
 ```
@@ -32,7 +32,7 @@ php artisan versioner:git:show
 
 ### Generate new version
 
-To generate a new version you have to execute the artisan command `php artisan versioner:git:new` and insert the type of the release you'd like to generate. There are three realease options:
+To generate a new version you have to execute the artisan command `php artisan versioner:git:new` and then select the type of the release you'd like to generate. There are three realease options:
 - **MAJOR**: increases the X
 - **MINOR**: increases the Y
 - **PATCH**: increases the Z

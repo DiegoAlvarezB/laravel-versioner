@@ -13,7 +13,7 @@ The versions are generated in Git as tags with the format `vX.Y.Z`. When generat
 
 Package installation with composer:
 ```
-composer require diegoalvarez/laravel-versioner
+composer require diegoalvarezb/laravel-versioner
 ```
 
 And add the service provider in your `config/app.php` file:

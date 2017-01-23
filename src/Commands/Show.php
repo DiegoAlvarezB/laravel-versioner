@@ -44,21 +44,20 @@ class Show extends Command
         $this->line("");
 
         // get version tag list
-        $process = new Process('git tag -l "v*.*.*"');
+        $process = new Process('git tag -l "v*.*.*" | tail -1');
         $process->run();
         if (!$process->isSuccessful()) {
-            $this->error('Error retrieving git tag list');
+            $this->error("Error retrieving git tag list");
+
+            $this->info("\n");
+            exit;
         }
 
-        $processResult = trim($process->getOutput());
+        $currentVersion = trim($process->getOutput());
 
         // get latest version
-        if (empty($processResult)) {
+        if (empty($currentVersion)) {
             $currentVersion = "v0.0.0";
-        } else {
-            $tagList = explode(PHP_EOL, trim($processResult));
-
-            $currentVersion = $tagList[count($tagList) - 1];
         }
 
         $this->info("Current version: " . $currentVersion);

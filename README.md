@@ -29,9 +29,9 @@ php artisan versioner:git:show
 ### Generate new version
 
 To generate a new version you have to execute the artisan command `php artisan versioner:git:new` and insert the type of the release you'd like to generate. There are three realease options:
-- **release**: increases the X
-- **beta**: increases the Y
-- **alpha**: increases the Z
+- **major**: increases the X
+- **mino**: increases the Y
+- **patch**: increases the Z
 
 The command will create a new tag from `master` branch, and push it to origin.
 

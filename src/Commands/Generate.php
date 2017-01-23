@@ -45,27 +45,25 @@ class Generate extends Command
 
         $releaseType = $this->choice(
             'What kind of release do you want to generate?',
-            ['release', 'beta', 'alpha'],
+            ['MAJOR', 'MINOR', 'PATCH'],
             2
         );
 
         // get version tag list
-        $process = new Process('git tag -l "v*.*.*"');
+        $process = new Process('git tag -l "v*.*.*" | tail -1');
         $process->run();
         if (!$process->isSuccessful()) {
-            $this->error('Error retrieving git tag list');
+            $this->error("Error retrieving git tag list");
+
+            $this->info("\n");
             exit;
         }
 
-        $processResult = trim($process->getOutput());
+        $currentVersion = trim($process->getOutput());
 
         // get latest version
-        if (empty($processResult)) {
-            $currentVersion = "v0.0.0";
-        } else {
-            $tagList = explode(PHP_EOL, trim($processResult));
-
-            $currentVersion = $tagList[count($tagList) - 1];
+        if (empty($currentVersion)) {
+            $currentVersion = 'v0.0.0';
         }
 
         $this->line("Current version: " . $currentVersion);
@@ -79,7 +77,9 @@ class Generate extends Command
         $process = new Process("git tag -a '$newVersion' master -m '$releaseType release $newVersion'");
         $process->run();
         if (!$process->isSuccessful()) {
-            $this->error('Error creating new git tag');
+            $this->error("Error creating new git tag");
+
+            $this->info("\n");
             exit;
         }
 
@@ -89,7 +89,13 @@ class Generate extends Command
         $process = new Process("git push origin $newVersion");
         $process->run();
         if (!$process->isSuccessful()) {
-            $this->error('Error pushing git tag to remote');
+            $this->error("Error pushing tag to remote");
+
+            $this->line("");
+            $this->line("You have to push manually");
+            $this->line("> git push origin $newVersion");
+
+            $this->info("\n");
             exit;
         }
 
@@ -109,20 +115,23 @@ class Generate extends Command
         $versionParts = explode('.', substr($currentVersion, 1));
 
         switch ($releaseType) {
-            case 'alpha':
+            case 'PATCH':
                 $versionParts[2]++;
                 break;
-            case 'beta':
+            case 'MINOR':
                 $versionParts[1]++;
                 $versionParts[2] = 0;
                 break;
-            case 'release':
+            case 'MAJOR':
                 $versionParts[0]++;
                 $versionParts[1] = 0;
                 $versionParts[2] = 0;
                 break;
             default:
-                $this->error("Invalid argument");
+                $this->error("Invalid release type");
+
+                $this->info("\n");
+                exit;
         }
 
         $newVersion = "v" . implode('.', $versionParts);

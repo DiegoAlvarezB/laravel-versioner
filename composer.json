@@ -1,6 +1,6 @@
 {
     "name": "diegoalvarezb/laravel-versioner",
-    "description": "Utility to generate project versions in Git and Laravel.",
+    "description": "Utility to handle project versions in Git and Laravel.",
     "keywords": ["git", "laravel", "php", "version"],
     "homepage": "https://github.com/diegoalvarezb/laravel-versioner",
     "license": "MIT",

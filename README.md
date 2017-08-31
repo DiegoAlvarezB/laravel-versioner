@@ -1,4 +1,4 @@
-# Laravel Versioner
+# laravel-versioner
 
 This tool handle project versions in [Laravel](https://laravel.com/) and [Git](https://git-scm.com/).
 
